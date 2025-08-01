@@ -27,11 +27,12 @@ for label, ticker in tickers.items():
 
 # 📊 병합
 df_all = pd.DataFrame(data)
+df_all = df_all.interpolate(method='time')
 if df_all.empty:
     raise ValueError("No valid data was fetched.")
 
 # 💱 환율 적용
-usd_to_krw = df_all['USD/KRW'].ffill()
+usd_to_krw = df_all['USD/KRW']
 converted = df_all.copy()
 for col in df_all.columns:
     if '(USD)' in col:
